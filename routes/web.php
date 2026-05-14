@@ -5,23 +5,30 @@ use Illuminate\Support\Facades\Route;
 class Task {
     public function __construct(
         public int $id,
-        public string $name
+        public string $name,
+        public string $description = ''
         ) {
     }
 }
 
-Route::get('/', function () {
+$tasks = [
+            new Task(1, 'Go to the store', 'Get milk and bread'),
+            new Task(2, 'Go to the bank', 'Deposit paycheck'),
+            new Task(3, 'Go to the post office', 'Send package')
+        ];
+
+Route::get('/', function () use ($tasks) {
     return view('index', [
-        'tasks' => [
-            new Task(1, 'Go to the store'),
-            new Task(2, 'Go to the bank'),
-            new Task(3, 'Go to the post office')
-        ]
+        'tasks' => $tasks
     ]);
 })->name('tasks.index');
 
-Route::get('/tasks/{id}', function ($id) {
+Route::get('/tasks/{id}', function ($id) use ($tasks) {
+    $task = collect($tasks)->firstWhere('id', $id);
+    if (!$task) {
+        abort(404);
+    }
     return view('show', [
-        'task' => new Task($id, 'Go to the store')
+        'task' => $task
     ]);
 })->name('tasks.show');
