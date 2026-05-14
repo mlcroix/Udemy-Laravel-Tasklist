@@ -49,3 +49,15 @@ docker exec laravel_app php artisan migrate
 docker exec laravel_app php artisan migrate:rollback
 ```
 
+**Run seed scripts**
+```
+docker exec laravel_app php artisan db:seed
+```
+
+**Refresh migrations and seeds**
+```
+docker exec laravel_app php artisan migrate:refresh --seed
+```
+
+
+
