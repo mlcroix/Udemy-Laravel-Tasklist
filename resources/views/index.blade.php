@@ -4,7 +4,7 @@
     @if (count($tasks) > 0)
         <ul>
             @foreach ($tasks as $task)
-                <li>{{ $task->name }}</li>
+                <li>{{ $task->title }}</li>
             @endforeach
         </ul>
     @else
