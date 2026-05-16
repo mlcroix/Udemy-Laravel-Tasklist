@@ -2,11 +2,11 @@
 @section('title', 'Task List')
 @section('content')
     @if (count($tasks) > 0)
-        <ul>
             @foreach ($tasks as $task)
-                <li>{{ $task->title }}</li>
+                <div>
+                    <a href="{{ route('tasks.show', ['id' => $task->id]) }}"> {{ $task->title }}</a>
+                </div>
             @endforeach
-        </ul>
     @else
         <p>No tasks found.</p>
     @endif

@@ -12,10 +12,8 @@ Route::get('/', function () {
 })->name('tasks.index');
 
 Route::get('/tasks/{id}', function ($id) {
-    $task = Task::find($id);
-    if (!$task) {
-        abort(404);
-    }
+    $task = Task::findOrFail($id);
+
     return view('show', [
         'task' => $task
     ]);
