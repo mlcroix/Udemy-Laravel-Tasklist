@@ -12,16 +12,16 @@
         @csrf
         <div>
             <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
+            <input type="text" id="title" name="title" value="{{ old('title') }}" required>
         </div>
         <div>
             <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
+            <textarea id="description" name="description" required>{{ old('description') }}</textarea>
 
         </div>
         <div>
             <label for="long_description">Long Description:</label>
-            <textarea id="long_description" name="long_description" required></textarea>
+            <textarea id="long_description" name="long_description" required>{{ old('long_description') }}</textarea>
         </div>
         <button type="submit">Create Task</button>
 
