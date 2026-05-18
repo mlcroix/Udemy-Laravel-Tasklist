@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Task List')
 @section('content')
+    <a href="{{ route('tasks.create') }}">Create New Task</a>
+
     @if (count($tasks) > 0)
             @foreach ($tasks as $task)
                 <div>
