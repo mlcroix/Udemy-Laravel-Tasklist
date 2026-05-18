@@ -10,4 +10,10 @@
     @else
         <p>No tasks found.</p>
     @endif
+
+    @if ($tasks->count())
+        <nav>
+            {{$tasks->links()}}
+        </nav>
+    @endif
 @endsection

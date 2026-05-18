@@ -6,7 +6,7 @@ use App\Models\Task;
 
 
 Route::get('/', function () {
-    $tasks = Task::all();
+    $tasks = Task::latest()->paginate(10);
     return view('index', [
         'tasks' => $tasks
     ]);
