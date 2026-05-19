@@ -27,14 +27,19 @@ WORKDIR /var/www/html
 # Copy existing application directory contents
 COPY . /var/www/html
 
-# Set permissions
+# Create and set permissions for all necessary directories
 RUN mkdir -p /var/www/html/storage/framework/{sessions,views,cache,testing} \
     && mkdir -p /var/www/html/storage/logs \
     && mkdir -p /var/www/html/bootstrap/cache \
     && chown -R www-data:www-data /var/www/html/storage \
     && chown -R www-data:www-data /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+    && chmod -R 775 /var/www/html/bootstrap/cache \
+    && touch /var/www/html/storage/logs/laravel.log \
+    && chmod 664 /var/www/html/storage/logs/laravel.log
+
+# Remove Vite requirement (use CDN instead)
+RUN sed -i 's/@vite.*//' /var/www/html/resources/views/layouts/app.blade.php 2>/dev/null || true
 
 EXPOSE 9000
 
