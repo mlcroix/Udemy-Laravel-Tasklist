@@ -1,6 +1,6 @@
 FROM php:8.4-fpm
 
-# Install system dependencies
+# Install system dependencies including Node.js
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     libzip-dev \
-    libpq-dev
+    libpq-dev \
+    nodejs \
+    npm
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -38,8 +40,16 @@ RUN mkdir -p /var/www/html/storage/framework/{sessions,views,cache,testing} \
     && touch /var/www/html/storage/logs/laravel.log \
     && chmod 664 /var/www/html/storage/logs/laravel.log
 
-# Remove Vite requirement (use CDN instead)
-RUN sed -i 's/@vite.*//' /var/www/html/resources/views/layouts/app.blade.php 2>/dev/null || true
+# Fix npm cache directory permissions
+RUN mkdir -p /var/www/.npm \
+    && chown -R www-data:www-data /var/www/.npm \
+    && chmod 775 /var/www/.npm
+
+# Configure npm to use the cache directory
+RUN npm config set cache /var/www/.npm
+
+# Install Node dependencies and build assets (run as root, but safe during build)
+RUN npm install && npm run build
 
 EXPOSE 9000
 
