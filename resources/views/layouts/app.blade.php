@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task List</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css'])
 </head>
-<body>
-    <h1>
+<body class="container mx-auto mt-10 mb-10 max-w-lg">
+    <h1 class="text-3xl font-bold mb-5">
         @yield('title')
     </h1>
     <div>

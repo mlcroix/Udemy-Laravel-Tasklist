@@ -1,12 +1,14 @@
 @extends('layouts.app')
 @section('title', 'Task List')
 @section('content')
-    <a href="{{ route('tasks.create') }}">Create New Task</a>
+    <a href="{{ route('tasks.create') }}" class="link">Create New Task</a>
 
     @if (count($tasks) > 0)
             @foreach ($tasks as $task)
                 <div>
-                    <a href="{{ route('tasks.show', ['task' => $task->id]) }}"> {{ $task->title }}</a>
+                    <a href="{{ route('tasks.show', ['task' => $task->id]) }}"
+                        @class(['line-through' => $task->completed])>{{ $task->title }}
+                    </a>
                 </div>
             @endforeach
     @else
